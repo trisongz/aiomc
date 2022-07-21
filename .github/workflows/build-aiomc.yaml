@@ -24,14 +24,14 @@ jobs:
         GITHUB_REF: ${{ github.ref_name }}
 
     - name: upload to gexai pypi
-        run: twine upload dist/*
-        env:
-          TWINE_REPOSITORY_URL: ${{ secrets.pypi_repository }}
-          TWINE_USERNAME: ${{ secrets.pypi_username }}
-          TWINE_PASSWORD: ${{ secrets.pypi_password }}
+      run: twine upload dist/*
+      env:
+        TWINE_REPOSITORY_URL: ${{ secrets.pypi_repository }}
+        TWINE_USERNAME: ${{ secrets.pypi_username }}
+        TWINE_PASSWORD: ${{ secrets.pypi_password }}
 
     - name: upload to pypi
-        run: twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.personal_pypi_token }}
+      run: twine upload dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.personal_pypi_token }}
