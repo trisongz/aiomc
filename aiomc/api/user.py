@@ -142,7 +142,7 @@ def admin_user_svcacct_add(**kwargs) -> Response:
         'secretKey': 'verysecretpassword',
         'userStatus': 'enabled'}]
     '''
-    cmdstr = 'mc {flags} admin user svcaccount add'
+    cmdstr = 'mc {flags} admin user svcacct add'
     if 'access_key' in kwargs: cmdstr += ' --access-key {access_key}'
     if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
     if 'policy' in kwargs: cmdstr += ' --policy {policy}'
@@ -215,7 +215,7 @@ def admin_user_svcacct_edit(**kwargs) -> Response:
         'secretKey': 'verysecretpassword',
         'userStatus': 'enabled'}]
     '''
-    cmdstr = 'mc {flags} admin user svcaccount edit'
+    cmdstr = 'mc {flags} admin user svcacct edit'
     if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
     if 'policy' in kwargs: cmdstr += ' --policy {policy}'
     cmdstr += ' {target} {name}'
@@ -330,7 +330,7 @@ async def async_admin_user_svcacct_add(**kwargs) -> Response:
         'secretKey': 'verysecretpassword',
         'userStatus': 'enabled'}]
     '''
-    cmdstr = 'mc {flags} admin user svcaccount add'
+    cmdstr = 'mc {flags} admin user svcacct add'
     if 'access_key' in kwargs: cmdstr += ' --access-key {access_key}'
     if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
     if 'policy' in kwargs: cmdstr += ' --policy {policy}'
@@ -371,7 +371,7 @@ async def async_admin_user_svcacct_disable(**kwargs) -> Response:
 
     Usage::
 
-      >>> r = admin_user_svcacct_disable(target='aliasforhost', username='rockstar')
+      >>> r = admin_user_svcacct_disable(target='aliasforhost', name='rockstar')
     '''
     cmd = AsyncCommand('mc {flags} admin user svcacct disable {target} {name}')
     return await cmd.run(**kwargs)
@@ -403,7 +403,7 @@ async def async_admin_user_svcacct_edit(**kwargs) -> Response:
         'secretKey': 'verysecretpassword',
         'userStatus': 'enabled'}]
     '''
-    cmdstr = 'mc {flags} admin user svcaccount edit'
+    cmdstr = 'mc {flags} admin user svcacct edit'
     if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
     if 'policy' in kwargs: cmdstr += ' --policy {policy}'
     cmdstr += ' {target} {name}'
