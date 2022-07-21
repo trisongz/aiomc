@@ -137,7 +137,10 @@ class Response(object):
         self.name = name
         self.output = output
         self.json = make_json(self.output)
-        self.content = json.loads(self.json)
+        try:
+            self.content = json.loads(self.json)
+        except:
+            self.content = {}
         try:
             self.status = self.content.get('status', 'success')
         except AttributeError:
