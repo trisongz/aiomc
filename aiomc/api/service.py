@@ -10,6 +10,28 @@ __all__ = [
 ]
 
 
+def service_restart(**kwargs) -> Response:
+    '''Restart object storage server.
+
+    Usage::
+
+      >>> restart_service(target='aliasforhost')
+    '''
+    cmd = Command('minio {flags} service restart {target}')
+    return cmd(**kwargs)
+
+
+def service_stop(**kwargs) -> Response:
+    '''Stop object storage server.
+
+    Usage::
+
+      >>> stop_service(target='aliasforhost')
+    '''
+    cmd = Command('minio {flags} service stop {target}')
+    return cmd(**kwargs)
+
+
 def restart_service(**kwargs) -> Response:
     '''Restart object storage server.
 
@@ -30,6 +52,29 @@ def stop_service(**kwargs) -> Response:
     '''
     cmd = Command('minio {flags} service stop {target}')
     return cmd(**kwargs)
+
+
+
+async def async_service_restart(**kwargs) -> Response:
+    '''Restart object storage server
+
+    Usage::
+
+      >>> async_restart_service(target='aliasforhost')
+    '''
+    cmd = AsyncCommand('minio {flags} service restart {target}')
+    return await cmd.run(**kwargs)
+
+async def async_service_stop(**kwargs) -> Response:
+    '''Stop object storage server
+
+    Usage::
+
+      >>> stop_service(target='aliasforhost')
+    '''
+    cmd = AsyncCommand('minio {flags} service stop {target}')
+    return await cmd.run(**kwargs)
+
 
 
 async def async_restart_service(**kwargs) -> Response:

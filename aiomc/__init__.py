@@ -51,14 +51,18 @@ from .api.config import (
 
 from .api.server import (
     server,
-    async_server
+    async_server,
 )
 
 from .api.service import (
     stop_service,
     restart_service,
+    service_stop,
+    service_restart,
     async_stop_service,
     async_restart_service,
+    async_service_restart,
+    async_service_stop,
 )
 
 from .api.policy import (
