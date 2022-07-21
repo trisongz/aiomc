@@ -18,7 +18,7 @@ class aiomcError(Exception):
 
 
 def decoder(s: Union[bytes, str]):
-    return s if isinstance(str) else s.decode('utf-8')
+    return s if isinstance(s, str) else s.decode('utf-8')
 
 def stripnl(s: Union[bytes, str], source='\n'):
     return s.strip(source)
