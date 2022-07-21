@@ -1,6 +1,5 @@
 '''Async Python wrapper for the MinIO command line interface.'''
 
-__version__ = '0.0.1'
 __title__ = 'aiomc'
 
 
@@ -53,6 +52,13 @@ from .api.config import (
 from .api.server import (
     server,
     async_server
+)
+
+from .api.service import (
+    stop_service,
+    restart_service,
+    async_stop_service,
+    async_restart_service,
 )
 
 from .api.policy import (
