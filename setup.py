@@ -1,47 +1,43 @@
 import os
-import re
+import sys
+from pathlib import Path
+from setuptools import setup, find_packages
 
-from setuptools import find_packages, setup
+if sys.version_info.major != 3:
+    raise RuntimeError("This package requires Python 3+")
 
-
-def get_version(filename='__init__.py'):
-    here = os.path.abspath(os.path.dirname(__file__))
-    version_re = re.compile(r'''__version__ = ['"]([0-9.]+)['"]''')
-    with open(os.path.join(here, 'aiomc', filename)) as f:
-        content = f.read()
-    return version_re.search(content).group(1)
-
-
-def get_requirements(filename='requirements.txt'):
-    with open(filename) as f:
-        _requirements = f.read().split('\n')
-    return [req for req in _requirements if req]
+version = '0.0.1'
+pkg_name = 'aiomc'
+gitrepo = 'trisongz/aiomc'
+root = Path(__file__).parent
 
 
-def get_long_description(filename='README.md'):
-    with open(filename) as f:
-        long_description = f.read()
-    return long_description
+requirements = ['anyio']
+
+args = {
+    'packages': find_packages(include = ['aiomc', 'aiomc.*',]),
+    'install_requires': requirements,
+    'include_package_data': True,
+    'long_description': root.joinpath('README.md').read_text(encoding='utf-8'),
+    'entry_points': {
+        "console_scripts": []
+    }
+}
 
 setup(
-    name='aiomc',
-    version=get_version(),
-    packages=find_packages(),
-    author="Tri Songz",
-    author_email="ts@growthengineai.com",
-    description="Async Python wrapper for Minio Admin",
-    long_description=get_long_description(),
+    name=pkg_name,
+    version=version,
+    url=f'https://github.com/{gitrepo}',
+    license='MIT Style',
+    description='Async Python wrapper for Minio Admin',
+    author='Tri Songz',
+    author_email='ts@growthengineai.com',
     long_description_content_type="text/markdown",
-    install_requires=get_requirements(),
-    include_package_data=True,
-    url='https://github.com/trisongz/aiomc/',
     classifiers=[
-        "Programming Language :: Python",
-        "Development Status :: 3 - Alpha",
-        "License :: MIT License",
-        "Natural Language :: English",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.7",
-        "Topic :: Scientific/Engineering",
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.7',
+        'Topic :: Software Development :: Libraries',
     ],
-    license="MIT", )
+    **args
+)
