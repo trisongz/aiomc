@@ -1,7 +1,8 @@
-'''Async Python wrapper for the MinIO command line interface.'''
+"""
+Async Python wrapper for the MinIO command line interface.
+"""
 
 __title__ = 'aiomc'
-
 
 from .api.ls import (
     ls,
@@ -38,6 +39,25 @@ from .api.user import (
     async_admin_user_enable,
     async_admin_user_disable,
     async_admin_user_info,
+)
+
+
+from .api.user import (
+    admin_user_svcacct_add,
+    admin_user_svcacct_remove,
+    admin_user_svcacct_list,
+    admin_user_svcacct_enable,
+    admin_user_svcacct_disable,
+    admin_user_svcacct_edit,
+    
+    # Async
+    async_admin_user_svcacct_add,
+    async_admin_user_svcacct_remove,
+    async_admin_user_svcacct_list,
+    async_admin_user_svcacct_enable,
+    async_admin_user_svcacct_disable,
+    async_admin_user_svcacct_edit,
+    
 )
 
 from .api.config import (

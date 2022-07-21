@@ -18,6 +18,21 @@ __all__ = [
     'async_admin_user_disable',
     'async_admin_user_info',
 
+    # Service account
+    'admin_user_svcacct_add',
+    'admin_user_svcacct_remove',
+    'admin_user_svcacct_list',
+    'admin_user_svcacct_enable',
+    'admin_user_svcacct_disable',
+    'admin_user_svcacct_edit',
+    
+    # Async
+    'async_admin_user_svcacct_add',
+    'async_admin_user_svcacct_remove',
+    'async_admin_user_svcacct_list',
+    'async_admin_user_svcacct_enable',
+    'async_admin_user_svcacct_disable',
+    'async_admin_user_svcacct_edit',
 ]
 
 
@@ -108,9 +123,107 @@ def admin_user_info(**kwargs) -> Response:
     return cmd(**kwargs)
 
 
+## svcacct
+
+def admin_user_svcacct_add(**kwargs) -> Response:
+    '''Add a new service account for user on MinIO.
+
+    Usage::
+      >>> r = admin_user_svcacct_add(
+            target: str = 'aliasforhost', 
+            username: str = 'rockstar', 
+            access_key: Optional[str] = '...', 
+            secret_key: Optional[str] = '...', 
+            policy: Optional[str] = '...', # path to policy file
+        )
+      >>> r.content
+      [{'status': 'success',
+        'accessKey': 'rockstar',
+        'secretKey': 'verysecretpassword',
+        'userStatus': 'enabled'}]
+    '''
+    cmdstr = 'mc {flags} admin user svcaccount add'
+    if 'access_key' in kwargs: cmdstr += ' --access-key {access_key}'
+    if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
+    if 'policy' in kwargs: cmdstr += ' --policy {policy}'
+    cmdstr += ' {target} {username}'
+    cmd = Command(cmdstr)
+    return cmd(**kwargs)
+
+
+def admin_user_svcacct_remove(**kwargs) -> Response:
+    '''Remove a service account on MinIO.
+
+    Usage::
+
+      >>> r = admin_user_svcacct_remove(target='aliasforhost', name='myserviceaccount')
+      >>> r.content
+      [{
+       'status': 'success',
+       'accessKey': 'myserviceaccount'
+      }]
+    '''
+    cmd = Command('mc {flags} admin user svcacct remove {target} {name}')
+    return cmd(**kwargs)
+
+
+def admin_user_svcacct_enable(**kwargs) -> Response:
+    '''Enable a service account on MinIO.
+
+    Usage::
+
+      >>> r = admin_user_svcacct_enable(target='aliasforhost', name='rockstar')
+    '''
+    cmd = Command('mc {flags} admin user svcacct enable {target} {name}')
+    return cmd(**kwargs)
+
+
+def admin_user_svcacct_disable(**kwargs) -> Response:
+    '''Disable a service account on MinIO.
+
+    Usage::
+
+      >>> r = admin_user_svcacct_disable(target='aliasforhost', username='rockstar')
+    '''
+    cmd = Command('mc {flags} admin user svcacct disable {target} {name}')
+    return cmd(**kwargs)
+
+
+def admin_user_svcacct_list(**kwargs) -> Response:
+    '''List all service accounts on MinIO.
+
+    Usage::
+
+      >>> admin_user_svcacct_list(target='aliasforhost')
+    '''
+    cmd = Command('mc {flags} admin user svcacct list {target}')
+    return cmd(**kwargs)
+
+def admin_user_svcacct_edit(**kwargs) -> Response:
+    '''Edit an existing service account on MinIO.
+
+    Usage::
+      >>> r = admin_user_svcacct_add(
+            target: str = 'aliasforhost', 
+            name: str = 'myserviceaccount', 
+            secret_key: Optional[str] = '...', 
+            policy: Optional[str] = '...', # path to policy file
+        )
+      >>> r.content
+      [{'status': 'success',
+        'accessKey': 'rockstar',
+        'secretKey': 'verysecretpassword',
+        'userStatus': 'enabled'}]
+    '''
+    cmdstr = 'mc {flags} admin user svcaccount edit'
+    if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
+    if 'policy' in kwargs: cmdstr += ' --policy {policy}'
+    cmdstr += ' {target} {name}'
+    cmd = Command(cmdstr)
+    return cmd(**kwargs)
+
+
 ## Async
-
-
 
 async def async_admin_user_add(**kwargs) -> Response:
     '''Add a new user on MinIO.
@@ -194,4 +307,105 @@ async def async_admin_user_info(**kwargs) -> Response:
       [{'status': 'success', 'accessKey': 'rockstar', 'userStatus': 'disabled'}]
     '''
     cmd = AsyncCommand('mc {flags} admin user info {target} {username}')
+    return await cmd.run(**kwargs)
+
+
+## svc account
+
+
+async def async_admin_user_svcacct_add(**kwargs) -> Response:
+    '''Add a new service account for user on MinIO.
+
+    Usage::
+      >>> r = admin_user_svcacct_add(
+            target: str = 'aliasforhost', 
+            username: str = 'rockstar', 
+            access_key: Optional[str] = '...', 
+            secret_key: Optional[str] = '...', 
+            policy: Optional[str] = '...', # path to policy file
+        )
+      >>> r.content
+      [{'status': 'success',
+        'accessKey': 'rockstar',
+        'secretKey': 'verysecretpassword',
+        'userStatus': 'enabled'}]
+    '''
+    cmdstr = 'mc {flags} admin user svcaccount add'
+    if 'access_key' in kwargs: cmdstr += ' --access-key {access_key}'
+    if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
+    if 'policy' in kwargs: cmdstr += ' --policy {policy}'
+    cmdstr += ' {target} {username}'
+    cmd = AsyncCommand(cmdstr)
+    return await cmd.run(**kwargs)
+
+
+async def async_admin_user_svcacct_remove(**kwargs) -> Response:
+    '''Remove a service account on MinIO.
+
+    Usage::
+
+      >>> r = admin_user_svcacct_remove(target='aliasforhost', name='myserviceaccount')
+      >>> r.content
+      [{
+       'status': 'success',
+       'accessKey': 'myserviceaccount'
+      }]
+    '''
+    cmd = AsyncCommand('mc {flags} admin user svcacct remove {target} {name}')
+    return await cmd.run(**kwargs)
+
+
+async def async_admin_user_svcacct_enable(**kwargs) -> Response:
+    '''Enable a service account on MinIO.
+
+    Usage::
+
+      >>> r = admin_user_svcacct_enable(target='aliasforhost', name='rockstar')
+    '''
+    cmd = AsyncCommand('mc {flags} admin user svcacct enable {target} {name}')
+    return await cmd.run(**kwargs)
+
+
+async def async_admin_user_svcacct_disable(**kwargs) -> Response:
+    '''Disable a service account on MinIO.
+
+    Usage::
+
+      >>> r = admin_user_svcacct_disable(target='aliasforhost', username='rockstar')
+    '''
+    cmd = AsyncCommand('mc {flags} admin user svcacct disable {target} {name}')
+    return await cmd.run(**kwargs)
+
+
+async def async_admin_user_svcacct_list(**kwargs) -> Response:
+    '''List all service accounts on MinIO.
+
+    Usage::
+
+      >>> admin_user_svcacct_list(target='aliasforhost')
+    '''
+    cmd = AsyncCommand('mc {flags} admin user svcacct list {target}')
+    return await cmd.run(**kwargs)
+
+async def async_admin_user_svcacct_edit(**kwargs) -> Response:
+    '''Edit an existing service account on MinIO.
+
+    Usage::
+      >>> r = admin_user_svcacct_add(
+            target: str = 'aliasforhost', 
+            name: str = 'myserviceaccount', 
+            secret_key: Optional[str] = '...', 
+            policy: Optional[str] = '...', # path to policy file
+        )
+      >>> r.content
+      [{'status': 'success',
+        'accessKey': 'rockstar',
+        'secretKey': 'verysecretpassword',
+        'userStatus': 'enabled'}]
+    '''
+    cmdstr = 'mc {flags} admin user svcaccount edit'
+    if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
+    if 'policy' in kwargs: cmdstr += ' --policy {policy}'
+    cmdstr += ' {target} {name}'
+    cmd = AsyncCommand(cmdstr)
     return await cmd.run(**kwargs)
