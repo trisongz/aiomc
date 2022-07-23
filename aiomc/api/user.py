@@ -25,6 +25,7 @@ __all__ = [
     'admin_user_svcacct_enable',
     'admin_user_svcacct_disable',
     'admin_user_svcacct_edit',
+    'admin_user_svcacct_info',
     
     # Async
     'async_admin_user_svcacct_add',
@@ -33,6 +34,7 @@ __all__ = [
     'async_admin_user_svcacct_enable',
     'async_admin_user_svcacct_disable',
     'async_admin_user_svcacct_edit',
+    'async_admin_user_svcacct_info',
 ]
 
 
