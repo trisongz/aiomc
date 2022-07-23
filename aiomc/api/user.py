@@ -209,7 +209,7 @@ def admin_user_svcacct_info(**kwargs) -> Response:
       >>> admin_user_svcacct_info(target='aliasforhost', name='rockstar', policy='mypolicy')
     '''
     cmd_str = 'mc {flags} admin user svcacct info'
-    if 'policy' in kwargs: cmd_str += ' --policy {policy}'
+    if 'policy' in kwargs and kwargs.get('policy'): cmd_str += ' --policy {policy}'
     cmd_str += ' {target} {name}'
     cmd = Command(cmd_str)
     return cmd(**kwargs)
@@ -232,8 +232,10 @@ def admin_user_svcacct_edit(**kwargs) -> Response:
         'userStatus': 'enabled'}]
     '''
     cmdstr = 'mc {flags} admin user svcacct edit'
-    if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
-    if 'policy' in kwargs: cmdstr += ' --policy {policy}'
+    #if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
+    #if 'policy' in kwargs: cmdstr += ' --policy {policy}'
+    if kwargs.get('secret_key'): cmdstr += ' --secret-key {secret_key}'
+    if kwargs.get('policy'): cmdstr += ' --policy {policy}'
     cmdstr += ' {target} {name}'
     cmd = Command(cmdstr)
     return cmd(**kwargs)
@@ -347,9 +349,9 @@ async def async_admin_user_svcacct_add(**kwargs) -> Response:
         'userStatus': 'enabled'}]
     '''
     cmdstr = 'mc {flags} admin user svcacct add'
-    if 'access_key' in kwargs: cmdstr += ' --access-key {access_key}'
-    if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
-    if 'policy' in kwargs: cmdstr += ' --policy {policy}'
+    if 'access_key' in kwargs and kwargs.get('access_key'): cmdstr += ' --access-key {access_key}'
+    if 'secret_key' in kwargs and kwargs.get('secret_key'): cmdstr += ' --secret-key {secret_key}'
+    if 'policy' in kwargs and kwargs.get('policy'): cmdstr += ' --policy {policy}'
     cmdstr += ' {target} {username}'
     cmd = AsyncCommand(cmdstr)
     return await cmd.run(**kwargs)
@@ -413,7 +415,7 @@ async def async_admin_user_svcacct_info(**kwargs) -> Response:
       >>> admin_user_svcacct_info(target='aliasforhost', name='rockstar', policy='mypolicy')
     '''
     cmd_str = 'mc {flags} admin user svcacct info'
-    if 'policy' in kwargs: cmd_str += ' --policy {policy}'
+    if 'policy' in kwargs and kwargs.get('policy'): cmd_str += ' --policy {policy}'
     cmd_str += ' {target} {name}'
     cmd = AsyncCommand(cmd_str)
     return await cmd.run(**kwargs)
@@ -436,8 +438,8 @@ async def async_admin_user_svcacct_edit(**kwargs) -> Response:
         'userStatus': 'enabled'}]
     '''
     cmdstr = 'mc {flags} admin user svcacct edit'
-    if 'secret_key' in kwargs: cmdstr += ' --secret-key {secret_key}'
-    if 'policy' in kwargs: cmdstr += ' --policy {policy}'
+    if 'secret_key' in kwargs and kwargs.get('secret_key'): cmdstr += ' --secret-key {secret_key}'
+    if 'policy' in kwargs and kwargs.get('policy'): cmdstr += ' --policy {policy}'
     cmdstr += ' {target} {name}'
     cmd = AsyncCommand(cmdstr)
     return await cmd.run(**kwargs)
