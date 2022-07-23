@@ -199,6 +199,22 @@ def admin_user_svcacct_list(**kwargs) -> Response:
     cmd = Command('mc {flags} admin user svcacct list {target}')
     return cmd(**kwargs)
 
+
+def admin_user_svcacct_info(**kwargs) -> Response:
+    '''Returns a description of a service account associated to the specified user
+
+    Usage::
+
+      >>> admin_user_svcacct_info(target='aliasforhost', name='rockstar')
+      >>> admin_user_svcacct_info(target='aliasforhost', name='rockstar', policy='mypolicy')
+    '''
+    cmd_str = 'mc {flags} admin user svcacct info'
+    if 'policy' in kwargs: cmd_str += ' --policy {policy}'
+    cmd_str += ' {target} {name}'
+    cmd = Command(cmd_str)
+    return cmd(**kwargs)
+
+
 def admin_user_svcacct_edit(**kwargs) -> Response:
     '''Edit an existing service account on MinIO.
 
@@ -386,6 +402,22 @@ async def async_admin_user_svcacct_list(**kwargs) -> Response:
     '''
     cmd = AsyncCommand('mc {flags} admin user svcacct list {target}')
     return await cmd.run(**kwargs)
+
+
+async def async_admin_user_svcacct_info(**kwargs) -> Response:
+    '''Returns a description of a service account associated to the specified user
+
+    Usage::
+
+      >>> admin_user_svcacct_info(target='aliasforhost', name='rockstar')
+      >>> admin_user_svcacct_info(target='aliasforhost', name='rockstar', policy='mypolicy')
+    '''
+    cmd_str = 'mc {flags} admin user svcacct info'
+    if 'policy' in kwargs: cmd_str += ' --policy {policy}'
+    cmd_str += ' {target} {name}'
+    cmd = AsyncCommand(cmd_str)
+    return await cmd.run(**kwargs)
+
 
 async def async_admin_user_svcacct_edit(**kwargs) -> Response:
     '''Edit an existing service account on MinIO.
